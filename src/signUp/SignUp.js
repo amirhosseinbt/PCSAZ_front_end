@@ -29,7 +29,7 @@ const SignUp = ()=> {
                         <input placeholder="نام خانوادگی" name="Lname" type="text" autoComplete="off" className="form-control bg-transparent" dir="rtl" />
                      </div>
                      <div className="fv-row mb-6">
-                        <input placeholder="شماره تلفن همراه" name="phoneNumber" type="tel" autoComplete="off" className="form-control bg-transparent" dir="rtl" />
+                        <input placeholder="شماره تلفن همراه" name="phoneNumber" type="tel" autoComplete="off" className="form-control bg-transparent" />
                      </div>
                      <div className="text-muted mb-4" dir="rtl">تلفن همراه باید شامل یازده عدد باشد.</div>
                      <div className="fv-row mb-6">

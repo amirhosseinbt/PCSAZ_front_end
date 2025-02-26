@@ -4,6 +4,15 @@ import img1 from "../assets/media/avatars/300-7.jpg"
 const UserInformation = (props) => 
 {
     const [activeButton,setActiveButton] = useState('');
+    const [clicked,setClicked] = useState('');
+    const [copyButtonText,setCopyButtonText] = useState('کپی کردن کد معرفی');
+    const handleCopyClick = () =>
+    {
+        navigator.clipboard.writeText(document.getElementById('kt_referral_link_input').value);
+        setCopyButtonText('کپی شد !');
+        setClicked('btn-active-light-primary');
+        setTimeout(()=>{setCopyButtonText('کپی کردن کد معرفی');setClicked('')},2000);
+    }
     return(
         <div className="card mb-5 mb-xl-10">
             <div className="card-body pt-9 pb-0">
@@ -62,8 +71,8 @@ const UserInformation = (props) =>
                                     </div>
                                 </div>
                                 <div class="d-flex">
-                                    <input id="kt_referral_link_input" type="text" class="form-control form-control-solid me-3 flex-grow-1" value="12548" readOnly/>
-                                    <button id="kt_referral_program_link_copy_btn" class="btn btn-light btn-active-light-primary fw-bold flex-shrink-0" data-clipboard-target="#kt_referral_link_input">کپی کد معرفی</button>
+                                    <input id="kt_referral_link_input" type="text" class="form-control form-control-solid me-3 flex-grow-1" dir='ltr' value="12548" readOnly/>
+                                    <button id="kt_referral_program_link_copy_btn" class={`btn ${clicked} btn-light  fw-bold flex-shrink-0`} onClick={handleCopyClick}>{copyButtonText}</button>
                                 </div>
                             </div>
                         </div>
