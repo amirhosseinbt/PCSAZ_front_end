@@ -1,65 +1,40 @@
-import {React,useState} from "react";
+import {React,useState,useEffect} from "react";
+import { useNavigate} from "react-router-dom";
 import axios from "axios";
 import Logo from '../assets/media/logos/custom-2.svg'
 import './SignIn.css'
-const SignIn = ()=> {
+import { useDispatch, useSelector } from "react-redux";
+import { jwtActions } from "../store/userAuthenticaion";
+const SignIn = (props)=> {
+   const dispath = useDispatch();
+   const jwt = useSelector(state=>state.jwt);
+   useEffect(() => {
+      document.body.classList.add("sign-up-in-page");
+      return () => {
+        document.body.classList.remove("sign-up-in-page");
+      };
+    }, []);
    const [phoneNumber , setPhoneNumber] = useState('');
    const [password , setPassword] =useState('');
-
+   const navigate = useNavigate();
    const onPhoneNumberChange = (event) => {
       setPhoneNumber(event.target.value);
   }
   const onPasswordChange = (event) => {
       setPassword(event.target.value);
   }
-   const onSubmitSignin = () =>{
-      axios
-      .post("http://192.168.11.185:8000/user/login/", {
-          phone : phoneNumber,
-          password : password,
+
+   const onSubmitSignin = (event) =>{
+      event.preventDefault();
+      axios.post("http://192.168.80.148:8000/user/login/", {
+         phone : phoneNumber,
+         password : password,
       })
       .then((res) => {
-          this.setState({
-              user: "",
-              quote: "",
-          });
+         dispath(jwtActions.Login(res.data.jwt));
+         navigate('/');
       })
       .catch((err) => {console.log(err)});
-      // fetch('http://192.168.11.185:8000/user/login/',{
-      //     method:'POST',
-      //     headers:{'Content-Type':'application/json'},
-      //     body: JSON.stringify(
-      //         {
-      //             phone : phoneNumber,
-      //             password : password
-      //         }
-              
-      //     )
-      // })
-      // .then(response => console.log(response.json()))
-      // .then(data => {
-      //     if(data.id)
-      //     {
-      //         const user = {
-      //             username:data.username,
-      //             entries:data.entries
-      //         }
-      //         localStorage.setItem('user',JSON.stringify(user));
-      //         setshowalert(false);
-      //         navigate('/');
-      //     }
-      //     else 
-      //     {
-      //         setshowalert(true);
-              
-      //         setalerttext('نام کاربری یا رمز عبور اشتباه است.');
-      //     }
-      // })
-      // .catch(err => {
-      //     setshowalert(true);
-      //     setalerttext('دوباره تلاش کنید.'); 
-      // })
-      // setshowalert(false);
   }
     return(
       <div className="d-flex flex-column flex-root">
@@ -75,7 +50,7 @@ const SignIn = ()=> {
          <div className="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12 p-lg-20">
             <div className="bg-body d-flex flex-column align-items-stretch flex-center rounded-4 w-md-600px p-20">
                <div className="d-flex flex-center flex-column flex-column-fluid px-lg-10 pb-15 pb-lg-20">
-                  <form className="form w-100" noValidate="novalidate" id="kt_sign_up_form" data-kt-redirect-url="../../demo1/dist/authentication/layouts/creative/sign-in.html" action="#">
+                  <form className="form w-100" noValidate="novalidate" id="kt_sign_up_form" data-kt-redirect-url="../../demo1/dist/authentication/layouts/creative/sign-in.html" action="post">
                      <div className="text-center mb-11">
                         <h1 className="text-dark fw-bolder mb-3">ورود</h1>
                         <div className="text-gray-500 fw-semibold fs-6">سامانه پی سی ساز</div>
@@ -90,7 +65,7 @@ const SignIn = ()=> {
                      </div>
 
                      <div className="d-grid mb-10">
-                        <button type="button" id="kt_sign_up_submit" className="btn btn-primary" onClick={onSubmitSignin}>
+                        <button id="kt_sign_up_submit" className="btn btn-primary" onClick={onSubmitSignin}>
                            <span className="indicator-label">ورود</span>
                            <span className="indicator-progress">Please wait...
                            <span className="spinner-border spinner-border-sm align-middle ms-2"></span></span>

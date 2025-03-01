@@ -1,7 +1,13 @@
-import React from "react";
+import {React,useEffect} from "react";
 import './Error404.css';
 import img1 from '../assets/media/auth/404-error.png'
 const Error404 = ()=>{
+    useEffect(() => {
+        document.body.classList.add("error-404-page");
+        return () => {
+          document.body.classList.remove("error-404-page");
+        };
+      }, []);
     return(
     <div class="d-flex flex-column flex-root">
         <div class="d-flex flex-column flex-center flex-column-fluid">

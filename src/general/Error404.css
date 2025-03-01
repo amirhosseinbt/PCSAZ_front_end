@@ -1,1 +1,1 @@
-#error-404-page { background-image: url('../assets/media/auth/bg1.jpg'); background-size:cover; background-repeat: no-repeat; background-attachment: fixed;} [data-bs-theme="dark"] body { background-image: url('../assets/media/auth/bg1-dark.jpg'); }
+.error-404-page { background-image: url('../assets/media/auth/bg1.jpg'); background-size:cover; background-repeat: no-repeat; background-attachment: fixed;} [data-bs-theme="dark"] body { background-image: url('../assets/media/auth/bg1-dark.jpg'); }
