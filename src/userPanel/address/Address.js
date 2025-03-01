@@ -1,6 +1,8 @@
 import React from "react";
 import AddressItem from './AddressItem';
+import { useSelector } from "react-redux";
 const Address = ({showStatus}) => {
+    const Info = useSelector(state=>state.userInfo.userInfo);
     return(
         <div className="card card-flush mb-6 mb-xl-9">
             <div className="card-header mt-6">
@@ -17,10 +19,10 @@ const Address = ({showStatus}) => {
                 </div>
             </div>
             <div className="card-body d-flex flex-column">
-                <AddressItem text={'همدان میدان پژوهش دانشگاه بوعلی'}/>            
-                <AddressItem text={'تهران میدان آزادی'}/>            
-                <AddressItem text={'شیراز میدان حافظ خیابان سعدی'}/>            
-                <AddressItem text={'اصفهان میدان نقش جهان'}/>            
+                {Info.adresses &&
+                Info.adresses.map((address,index)=>
+                    (<AddressItem text={address.province + ' ' + address.remainder} key={index}/>)
+                )}
             </div>
         </div>
     );

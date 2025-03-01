@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { jwtActions } from "../store/userAuthenticaion";
 const SignUp = ()=> {
    const dispath = useDispatch();
-   const jwt = useSelector(state=>state.jwt);
+   const jwt = useSelector(state=>state.jwt.jwt);
    useEffect(() => {
       document.body.classList.add("sign-up-in-page");
       return () => {
@@ -38,7 +38,7 @@ const SignUp = ()=> {
    const onSingUpSubmit = (event) =>
    {
       event.preventDefault();
-      axios.post("http://192.168.80.148:8000/user/signup/", {
+      axios.post("http://192.168.1.10:8000/user/signup/", {
          first_name : fname,
          last_name : lname,
          phone : phoneNumber,

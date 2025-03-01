@@ -29,8 +29,8 @@ const SubscriptionDetail = () =>{
                             <div className="text-gray-400 fw-semibold fs-5 mb-2">10 روز</div>
                         </div>
                         {/* <div className="d-flex align-items-center"> */}
-                            <div class="progress h-5px w-100">
-                                <div class="progress-bar bg-info" role="progressbar" style={{width: '33%'}} aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                            <div className="progress h-5px w-100">
+                                <div className="progress-bar bg-info" role="progressbar" style={{width: '33%'}} aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
                                 </div>
                             {/* </div> */}
                         </div>

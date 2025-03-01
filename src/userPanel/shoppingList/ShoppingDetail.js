@@ -4,7 +4,7 @@ import img2 from '../../assets/media/stock/ecommerce/100.png';
 import ShoppingDetailItem from './ShoppingDetatilItem';
 const ShoppingDetail = ({showStatus}) => {
     return(
-        <div className="modal fade show" id="kt_modal_new_address" tabindex="-1" style={{display: 'block', paddingRight: '0px'}} aria-modal="true" role="dialog">
+        <div className="modal fade show" id="kt_modal_new_address" tabIndex="-1" style={{display: 'block', paddingRight: '0px'}} aria-modal="true" role="dialog">
 			 
 			<div className="modal-dialog modal-dialog-centered mw-650px">
 				 

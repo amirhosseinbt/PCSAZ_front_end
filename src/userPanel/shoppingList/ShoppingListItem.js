@@ -18,8 +18,8 @@ const ShoppingListItem=(props)=>{
                 <span className="fw-bold">{props.payDate}</span>
             </td>
             <td className="text-start">
-                <button onClick={()=>props.showStatus(true)} class="btn btn-icon btn-light btn-active-secondary btn-sm ms-auto me-lg-n7">
-				    <i class="ki-duotone ki-left fs-2"></i>
+                <button onClick={()=>props.showStatus(true)} className="btn btn-icon btn-light btn-active-secondary btn-sm ms-auto me-lg-n7">
+				    <i className="ki-duotone ki-left fs-2"></i>
             	</button>
             </td>
         </tr>

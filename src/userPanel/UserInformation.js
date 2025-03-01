@@ -1,8 +1,12 @@
 import {React,useState} from "react";
 import img1 from "../assets/media/avatars/300-7.jpg"
+import { useSelector } from "react-redux";
 
 const UserInformation = (props) => 
 {
+    const Info = useSelector(state=>state.userInfo.userInfo);
+    const isAuth = useSelector(state=>state.userInfo.isAuthenticated);
+    const fullName = Info.first_name + ' ' + Info.last_name;
     const [activeButton,setActiveButton] = useState('');
     const [clicked,setClicked] = useState('');
     const [copyButtonText,setCopyButtonText] = useState('کپی کردن کد معرفی');
@@ -27,11 +31,11 @@ const UserInformation = (props) =>
                         <div className="d-flex justify-content-between align-items-start flex-wrap mb-2">
                             <div className="d-flex flex-column">
                                 <div className="d-flex align-items-center mb-2">
-                                    <span href="#" className="text-gray-900 text-hover-primary fs-2 fw-bold me-1">نام و نام خانوادگی</span>
-                                {props.vip?
-                                <i class="ki-duotone ki-verify fs-1 text-primary">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
+                                    <span href="#" className="text-gray-900 text-hover-primary fs-2 fw-bold me-1">{fullName}</span>
+                                {Info.is_vip?
+                                <i className="ki-duotone ki-verify fs-1 text-primary">
+                                    <span className="path1"></span>
+                                    <span className="path2"></span>
                                 </i>:
                                 null}
                                 
@@ -43,7 +47,7 @@ const UserInformation = (props) =>
                                 <div className="d-flex flex-wrap">
                                     <div className="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                         <div className="d-flex align-items-center">
-                                            <div className="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="4500" data-kt-countup-prefix="﷼" data-kt-initialized="1">450,000,000</div>
+                                            <div className="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="4500" data-kt-countup-prefix="﷼" data-kt-initialized="1">{Info.wallet_balance}</div>
                                         </div>
                                         <div className="fw-semibold fs-6 text-gray-400">موجودی کیف پول</div>
                                     </div>
@@ -51,11 +55,11 @@ const UserInformation = (props) =>
                                         <div className="d-flex align-items-center">
                                             <div className="fs-2 fw-bold counted mb-1" >زمان ثبت نام</div>
                                         </div>
-                                        <div className="fw-semibold fs-6 text-gray-400" dir="ltr">2022/02/01 10:32:33</div>
+                                        <div className="fw-semibold fs-6 text-gray-400" dir="ltr">{Info.client_timestamp}</div>
                                     </div>
                                     <div className="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                         <div className="d-flex align-items-center">
-                                            <div className="fs-2 fw-bold">20</div>
+                                            <div className="fs-2 fw-bold">?</div>
                                         </div>
                                         <div className="fw-semibold fs-6 text-gray-400">تعداد کدهای تخفیف معرفی</div>
                                     </div>
@@ -63,16 +67,16 @@ const UserInformation = (props) =>
                             </div>
                             <div className="d-flex flex-column flex-grow-1 pe-8">
                                 <div className="d-flex flex-wrap">
-                                    <div class="card card-dashed flex-center min-w-175px my-3 p-6">
-                                        <span class="fs-4 fw-semibold text-primary pb-1 px-2">تعداد افراد معرفی شده</span>
-                                        <span class="fs-lg-2tx fw-bold d-flex justify-content-center">
-                                            20
+                                    <div className="card card-dashed flex-center min-w-175px my-3 p-6">
+                                        <span className="fs-4 fw-semibold text-primary pb-1 px-2">تعداد افراد معرفی شده</span>
+                                        <span className="fs-lg-2tx fw-bold d-flex justify-content-center">
+                                            {Info.count_of_referred}
                                         </span>
                                     </div>
                                 </div>
-                                <div class="d-flex">
-                                    <input id="kt_referral_link_input" type="text" class="form-control form-control-solid me-3 flex-grow-1" dir='ltr' value="12548" readOnly/>
-                                    <button id="kt_referral_program_link_copy_btn" class={`btn ${clicked} btn-light  fw-bold flex-shrink-0`} onClick={handleCopyClick}>{copyButtonText}</button>
+                                <div className="d-flex">
+                                    <input id="kt_referral_link_input" type="text" className="form-control form-control-solid me-3 flex-grow-1" dir='ltr' value={Info.referral_code} readOnly/>
+                                    <button id="kt_referral_program_link_copy_btn" className={`btn ${clicked} btn-light  fw-bold flex-shrink-0`} onClick={handleCopyClick}>{copyButtonText}</button>
                                 </div>
                             </div>
                         </div>

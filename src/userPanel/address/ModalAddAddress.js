@@ -2,7 +2,7 @@ import React from "react";
 
 const ModalAddAddress = ({showStatus}) =>{
     return(
-        <div className="modal fade show" id="kt_modal_new_address" tabindex="-1" style={{display: 'block', paddingRight: '0px'}} aria-modal="true" role="dialog">
+        <div className="modal fade show" id="kt_modal_new_address" tabIndex="-1" style={{display: 'block', paddingRight: '0px'}} aria-modal="true" role="dialog">
 			 
 			<div className="modal-dialog modal-dialog-centered mw-650px">
 				 
@@ -63,7 +63,7 @@ const ModalAddAddress = ({showStatus}) =>{
 											</i>
 										</span>
 									</label>
-									<select name="country" data-control="select2" data-dropdown-parent="#kt_modal_new_address" data-placeholder="انتخاب  کشور..." className="form-select form-select-solid select2-hidden-accessible" tabindex="-1" aria-hidden="true" data-kt-initialized="1" data-select2-id="select2-data-344-lrvd">
+									<select name="country" data-control="select2" data-dropdown-parent="#kt_modal_new_address" data-placeholder="انتخاب  کشور..." className="form-select form-select-solid select2-hidden-accessible" tabIndex="-1" aria-hidden="true" data-kt-initialized="1" data-select2-id="select2-data-344-lrvd">
 										<option value="" data-select2-id="select2-data-346-mrsj">انتخاب  کشور...</option>
 										<option value="AF">Afghanistan</option>
 										<option value="AX">Aland Islands</option>
@@ -289,7 +289,7 @@ const ModalAddAddress = ({showStatus}) =>{
 										<option value="YE">Yemen</option>
 										<option value="ZM">Zambia</option>
 										<option value="ZW">Zimbabwe</option>
-									</select><span className="select2 select2-container select2-container--bootstrap5" dir="rtl" data-select2-id="select2-data-345-gkad" style={{width: '100%'}}><span className="selection"><span className="select2-selection select2-selection--single form-select form-select-solid undefined" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-country-fc-container" aria-controls="select2-country-fc-container"><span className="select2-selection__rendered" id="select2-country-fc-container" role="textbox" aria-readonly="true" title="انتخاب  کشور..."><span className="select2-selection__placeholder">انتخاب  کشور...</span></span><span className="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span className="dropdown-wrapper" aria-hidden="true"></span></span>
+									</select><span className="select2 select2-container select2-container--bootstrap5" dir="rtl" data-select2-id="select2-data-345-gkad" style={{width: '100%'}}><span className="selection"><span className="select2-selection select2-selection--single form-select form-select-solid undefined" role="combobox" aria-haspopup="true" aria-expanded="false" tabIndex="0" aria-disabled="false" aria-labelledby="select2-country-fc-container" aria-controls="select2-country-fc-container"><span className="select2-selection__rendered" id="select2-country-fc-container" role="textbox" aria-readonly="true" title="انتخاب  کشور..."><span className="select2-selection__placeholder">انتخاب  کشور...</span></span><span className="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span className="dropdown-wrapper" aria-hidden="true"></span></span>
 								<div className="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
 								<div className="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
 									<label className="required fs-5 fw-semibold mb-2">ادرس1</label>
