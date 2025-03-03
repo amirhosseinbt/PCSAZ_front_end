@@ -1,6 +1,7 @@
-import React from "react";
+import {React , useEffect} from "react";
 
 const DiscodeListItem=(props)=>{
+
     return(
         <tr>
             <td className="text-start pe-0">{props.code}</td>

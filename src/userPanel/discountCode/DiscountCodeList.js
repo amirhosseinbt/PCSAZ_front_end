@@ -1,12 +1,29 @@
-import React from "react";
+import {React,useEffect} from "react";
+import axios from "axios";
+import { useDispatch ,useSelector} from "react-redux";
+import { codeActions } from "../../store/userAuthenticaion";
 import DiscodeListItem from "./DiscodeListItem";
+
 const DiscoutnCodeList = () =>{
+    const discountCodes = useSelector(state=>state.discountCode.discountCode);
+    const jwt = useSelector(state=>state.jwt.jwt);
+    axios.defaults.headers.common['Authorization'] = jwt;
+    const dispatch = useDispatch();
+    const ip = useSelector(state=>state.ip.ip);
+    
+    useEffect(()=>{
+    axios.get(`http://${ip}:8000/user/discount_detail/`)
+    .then(res=> {
+      console.log(res.data);
+      dispatch(codeActions.SetCodes(res.data));
+    });
+    },[]);
     return(
         <div className="card card-flush mb-10">
             <div className="card-header align-items-center py-5 gap-2 gap-md-5">
                 <div className="card-title">
                     <div className="d-flex align-items-center position-relative my-1">
-                        <input type="text" className="form-control form-control-solid w-250px ps-12" placeholder="لیست کد های تخفیف" readOnly="true"/>
+                        <input type="text" className="form-control form-control-solid w-250px ps-12" placeholder="لیست کد های تخفیف" readOnly={true}/>
                     </div>
                 </div>
             </div>
@@ -22,11 +39,15 @@ const DiscoutnCodeList = () =>{
                         </tr>
                     </thead>
                     <tbody className="fw-semibold text-gray-600">
-                       <DiscodeListItem expirationDate={'2024'} code={'1'} usageCount={'2'} amount={'$200'} limit = {'$100'}/>
-                       <DiscodeListItem expirationDate={'2025'} code={'2'} usageCount={'2'} amount={'$300'} limit = {'$100'}/>
+                    {discountCodes.discount_codes&&
+                        discountCodes.discount_codes.map((code,index)=>(
+                            <DiscodeListItem expirationDate={code.expiration_date} code={code.code} usageCount={code.usage_count} amount={code.amount} limit = {code.discount_limit} key={index}/>
+                        ))
+                    }
+                       {/* <DiscodeListItem expirationDate={'2025'} code={'2'} usageCount={'2'} amount={'$300'} limit = {'$100'}/>
                        <DiscodeListItem expirationDate={'2022'} code={'3'} usageCount={'2'} amount={'$200'} limit = {'$100'}/>
                        <DiscodeListItem expirationDate={'2021'} code={'4'} usageCount={'2'} amount={'$100'} limit = {'$100'}/>
-                       <DiscodeListItem expirationDate={'2025'} code={'5'} usageCount={'2'} amount={'$1200'} limit = {'$100'}/>
+                       <DiscodeListItem expirationDate={'2025'} code={'5'} usageCount={'2'} amount={'$1200'} limit = {'$100'}/> */}
                        
                     </tbody>
                 </table>

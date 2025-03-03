@@ -2,7 +2,7 @@ import {React} from 'react';
 import img1 from "../../assets/media/stock/ecommerce/1.png";
 import img2 from '../../assets/media/stock/ecommerce/100.png';
 import ShoppingDetailItem from './ShoppingDetatilItem';
-const ShoppingDetail = ({showStatus}) => {
+const ShoppingDetail = (props) => {
     return(
         <div className="modal fade show" id="kt_modal_new_address" tabIndex="-1" style={{display: 'block', paddingRight: '0px'}} aria-modal="true" role="dialog">
 			 
@@ -12,9 +12,9 @@ const ShoppingDetail = ({showStatus}) => {
                     <div className="card card-flush py-4 flex-row-fluid overflow-hidden">
                         <div className="card-header">
                             <div className="card-title">
-                                <h2>سفارش#14534</h2>
+                                <h2>سفارش# {props.Info.tracking_code}</h2>
                             </div>
-                            <button className="btn btn-sm btn-icon btn-active-color-primary mt-4" data-bs-dismiss="modal" onClick={()=>showStatus(false)}>
+                            <button className="btn btn-sm btn-icon btn-active-color-primary mt-4" data-bs-dismiss="modal" onClick={()=>{props.showStatus(false);props.showDetail(false);}}>
                                     <i className="ki-duotone ki-cross fs-1">
                                         <span className="path1"></span>
                                         <span className="path2"></span>
@@ -33,28 +33,25 @@ const ShoppingDetail = ({showStatus}) => {
                                         </tr>
                                     </thead>
                                     <tbody className="fw-semibold text-gray-600">
-                                        <ShoppingDetailItem name={'ساعت'} id={'1254'} quantity={2} price={'$10'} imgSrc={img1}/>
-                                        <ShoppingDetailItem name={'کفش'} id={'12544'} quantity={1} price={'$10'} imgSrc={img2}/>
-                                        <ShoppingDetailItem name={'کفش'} id={'12544'} quantity={1} price={'$10'} imgSrc={img2}/>
-                                        <ShoppingDetailItem name={'کفش'} id={'12544'} quantity={1} price={'$10'} imgSrc={img2}/>
-                                        <ShoppingDetailItem name={'کفش'} id={'12544'} quantity={1} price={'$10'} imgSrc={img2}/>
-                                        <ShoppingDetailItem name={'کفش'} id={'12544'} quantity={1} price={'$10'} imgSrc={img2}/>
+                                        {
+                                            props.Info.products&&
+                                            props.Info.products.map((product,index)=>(
+                                                <ShoppingDetailItem name={product.category} id={product.product_id} quantity={product.quantity} price={product.cart_price} imgSrc={img1} key={index}/>
+
+                                            ))
+                                        }
                                         <tr>
-                                            <td colspan="4" className="text-end">جمع کل</td>
-                                            <td className="text-end">$264.00</td>
+                                            <td colSpan="4" className="text-end">جمع کل</td>
+                                            <td className="text-end">{props.Info.total_price}</td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="4" className="text-end">VAT (0%)</td>
+                                        {/* <tr>
+                                            <td colSpan="4" className="text-end">VAT (0%)</td>
                                             <td className="text-end">$0.00</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4" className="text-end">حمل دریایی نرخ</td>
-                                            <td className="text-end">$5.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" className="fs-3 text-dark text-end">Grand کل</td>
+                                            <td colSpan="4" className="fs-3 text-dark text-end">Grand کل</td>
                                             <td className="text-dark fs-3 fw-bolder text-end">$269.00</td>
-                                        </tr>
+                                        </tr> */}
                                     </tbody>
                                 </table>
                             </div>

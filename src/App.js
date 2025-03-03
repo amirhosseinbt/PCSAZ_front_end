@@ -6,9 +6,10 @@ import SignIn from './signIn/SignIn';
 import Error404 from './general/Error404';
 import UserPanel from './userPanel/UserPanel';
 import { useDispatch, useSelector } from 'react-redux';
+import { ipActions } from './store/userAuthenticaion';
 function App() {
   const dispath = useDispatch();
-  const jwt = useSelector(state=>state.jwt);
+  dispath(ipActions.SetIp('192.168.80.148'));
   return (
         <Router>
             <Routes>

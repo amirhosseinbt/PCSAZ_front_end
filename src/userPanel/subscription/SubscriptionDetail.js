@@ -1,6 +1,20 @@
-import React from "react";
-
+import {React , useEffect} from "react";
+import axios from "axios";
+import { useDispatch,useSelector } from "react-redux";
+import { vipDetailActions } from "../../store/userAuthenticaion";
 const SubscriptionDetail = () =>{
+    const dispatch = useDispatch();
+    const ip = useSelector(state=>state.ip.ip);
+    const jwt = useSelector(state=>state.jwt.jwt);
+    const vipDetails = useSelector(state=>state.vipDetail.vipDetail);
+    axios.defaults.headers.common['Authorization'] = jwt;
+    useEffect(()=>{
+        axios.get(`http://${ip}:8000/user/vip_detail/`)
+        .then(res=> {
+            console.log(res.data);
+            dispatch(vipDetailActions.SetVipDetail(res.data));
+        });
+      },[]);
     return(
     <div className="card card-xl-stretch mb-5 mb-xl-8">
         <div className="card-body p-0">
@@ -10,7 +24,7 @@ const SubscriptionDetail = () =>{
                 </div>
                 <div className="d-flex text-center flex-column text-white pt-8">
                     <span className="fw-semibold fs-7">میزان سود ماهیانه</span>
-                    <span className="fw-bold fs-2x pt-1">$37,562.00</span>
+                    <span className="fw-bold fs-2x pt-1">{vipDetails.bonus}</span>
                 </div>
             </div>
             <div className="bg-body shadow-sm card-rounded mx-9 mb-9 px-6 py-9 position-relative z-index-1" style={{marginTop: '-100px'}}>
@@ -26,11 +40,13 @@ const SubscriptionDetail = () =>{
                     <div className="d-flex align-items-center flex-wrap w-100">
                         <div className="mb-1 pe-3 flex-grow-1">
                             <a href="#" className="fs-5 text-gray-800 text-hover-primary fw-bold mb-2">زمان باقی مانده</a>
-                            <div className="text-gray-400 fw-semibold fs-5 mb-2">10 روز</div>
+                            <div className="text-gray-400 fw-semibold fs-5 mb-2">
+                                    {vipDetails.Time_remaining.days + ' روز '+vipDetails.Time_remaining.hours+' ساعت '+vipDetails.Time_remaining.minutes +' دقیقه '}
+                            </div>
                         </div>
                         {/* <div className="d-flex align-items-center"> */}
                             <div className="progress h-5px w-100">
-                                <div className="progress-bar bg-info" role="progressbar" style={{width: '33%'}} aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                                <div className="progress-bar bg-info" role="progressbar" style={{width: `${(vipDetails.Time_remaining.days+0)*100/30}%`}} aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
                                 </div>
                             {/* </div> */}
                         </div>

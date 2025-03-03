@@ -1,9 +1,10 @@
 import {React,useState} from "react";
-import img1 from "../assets/media/avatars/300-7.jpg"
+import img1 from "../assets/media/avatars/blank.png"
 import { useSelector } from "react-redux";
 
 const UserInformation = (props) => 
 {
+    const giftCode = useSelector(state=>state.discountCode.discountCode);
     const Info = useSelector(state=>state.userInfo.userInfo);
     const isAuth = useSelector(state=>state.userInfo.isAuthenticated);
     const fullName = Info.first_name + ' ' + Info.last_name;
@@ -59,7 +60,7 @@ const UserInformation = (props) =>
                                     </div>
                                     <div className="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                         <div className="d-flex align-items-center">
-                                            <div className="fs-2 fw-bold">?</div>
+                                            <div className="fs-2 fw-bold">{giftCode.Gift_codes}</div>
                                         </div>
                                         <div className="fw-semibold fs-6 text-gray-400">تعداد کدهای تخفیف معرفی</div>
                                     </div>
@@ -95,9 +96,10 @@ const UserInformation = (props) =>
                     <li className="nav-item mt-2">
                         <button  onClick={()=>{setActiveButton('orders');props.showOption('orders')}} className={`nav-link text-active-primary ms-0 me-10 py-5 ${activeButton === 'orders'?'active':''}`}>خرید ها</button>
                     </li>
-                    <li className="nav-item mt-2">
+                    {Info.is_vip?
+                        <li className="nav-item mt-2">
                         <button onClick={()=>{setActiveButton('subscription');props.showOption('subscription')}} className={`nav-link text-active-primary ms-0 me-10 py-5 ${activeButton === 'subscription'?'active':''}`}>اشتراک</button>
-                    </li>
+                    </li>:null}
                 </ul>
             </div>
         </div>

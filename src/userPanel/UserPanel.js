@@ -19,32 +19,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { jwtActions } from "../store/userAuthenticaion";
 import { userINfoActions } from "../store/userAuthenticaion";
 import { cartsActions } from "../store/userAuthenticaion";
+import { codeActions } from "../store/userAuthenticaion";
 import axios from "axios";
 const UserPanel = (props) => {
   const jwt = useSelector(state=>state.jwt.jwt);
+  const ip = useSelector(state=>state.ip.ip);
   const dispatch = useDispatch();
   const [show,setShow] = useState(false);
   const [showShoppingDetail,setShowShoppingDetail] = useState(false);
   const [showOption,setShowOption] = useState('');
-  const [vip,setVip] = useState(true);
-  const [userInfo,setUserInfo] = useState({});
   const navigate = useNavigate();
   axios.defaults.headers.common['Authorization'] = jwt;
   const onLogoutClick = () =>
   {
     dispatch(jwtActions.Logout());
   }
-  // useEffect(()=>{
-    axios.get('http://192.168.1.10:8000/user/personal_data/')
+  useEffect(()=>{
+    axios.get(`http://${ip}:8000/user/personal_data/`)
     .then(res=> {
       dispatch(userINfoActions.SetUserInfo(res.data));
     });
-    axios.get('http://192.168.1.10:8000/user/carts_detail/')
+    axios.get(`http://${ip}:8000/user/carts_detail/`)
     .then(res=> {
-      console.log(res.data.carts_status);
+      console.log(res.data);
       dispatch(cartsActions.SetCarts(res.data.carts_status));
+      dispatch(cartsActions.SetShops(res.data.recent_shops));
     });
-  // },[]);
+
+  },[]);
   return (
     <div id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true" data-kt-app-toolbar-enabled="true" data-kt-app-toolbar-fixed="true" className="d-flex flex-column flex-root app-root" dir="rtl" >
       <div className="app-page flex-column flex-column-fluid" id="kt_app_page">
@@ -105,14 +107,13 @@ const UserPanel = (props) => {
                   id="kt_app_content_container"
                   className="app-container container-xxl"
                 >
-                <UserInformation showOption={setShowOption} vip={vip}/>
+                <UserInformation showOption={setShowOption}/>
                 {showOption==='address' || showOption===''?<Address showStatus={setShow}/>:null}
                 {show && (showOption==='address' || showOption==='')?<ModalAddAddress showStatus={setShow}/> :null}
                 {show && (showOption==='address' || showOption==='')?<div className="modal-backdrop fade show"></div>:null}
                 {showOption==='discountCode'?<DiscoutnCodeList/>:null}
                 {showOption==='shoppingCart'?<ShoppingCartList/>:null}
                 {showOption==='orders'?<ShoppingList show={setShowShoppingDetail}/>:null}
-                {showShoppingDetail && showOption==='orders'?<ShoppingDetail showStatus={setShowShoppingDetail}/> :null}
                 {showShoppingDetail && showOption==='orders'?<div className="modal-backdrop fade show"></div>:null}
                 {showOption==='subscription'?<SubscriptionDetail/>:null}
                 </div>

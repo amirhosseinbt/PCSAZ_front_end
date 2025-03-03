@@ -4,12 +4,12 @@ const ShoppingDetailItem = (props) => {
     return(
         <tr>
             <td>
-                <div className="d-flex align-items-center">
-                    <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html" className="symbol symbol-50px">
+                <div className="d-flex align-items-center mt-3">
+                    <p className="symbol symbol-50px">
                         <img src={props.imgSrc}/>
-                    </a>
-                    <div className="ms-5">
-                        <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html" className="fw-bold text-gray-600 text-hover-primary">{props.name}</a>
+                    </p>
+                    <div className="ms-5 mt-3" style={{cursor:"pointer"}}>
+                        <p  className="fw-bold text-gray-600 text-hover-primary">{props.name}</p>
                     </div>
                 </div>
             </td>

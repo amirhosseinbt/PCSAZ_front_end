@@ -23,10 +23,10 @@ const SignIn = (props)=> {
   const onPasswordChange = (event) => {
       setPassword(event.target.value);
   }
-
+  const ip = useSelector(state=>state.ip.ip);
    const onSubmitSignin = (event) =>{
       event.preventDefault();
-      axios.post("http://192.168.1.10:8000/user/login/", {
+      axios.post(`http://${ip}:8000/user/login/`, {
          phone : phoneNumber,
          password : password,
       })

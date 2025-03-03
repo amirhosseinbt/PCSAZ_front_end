@@ -11,7 +11,7 @@ const Address = ({showStatus}) => {
                 </div>
                 <div className="card-toolbar">
                     <button type="button" className="btn btn-light-primary btn-sm" data-bs-toggle="modal" data-bs-target="#kt_modal_new_address" onClick={()=>showStatus(true)}>
-                    <i className="ki-duotone ki-add-files fs-3">
+                    <i className="fa-solid la-edit fs-3">
                         <span className="path1"></span>
                         <span className="path2"></span>
                         <span className="path3"></span>
@@ -20,7 +20,7 @@ const Address = ({showStatus}) => {
             </div>
             <div className="card-body d-flex flex-column">
                 {Info.adresses &&
-                Info.adresses.map((address,index)=>
+                Info.adresses.map((address,index) =>
                     (<AddressItem text={address.province + ' ' + address.remainder} key={index}/>)
                 )}
             </div>
