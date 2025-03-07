@@ -11,7 +11,6 @@ const SubscriptionDetail = () =>{
     useEffect(()=>{
         axios.get(`http://${ip}:8000/user/vip_detail/`)
         .then(res=> {
-            console.log(res.data);
             dispatch(vipDetailActions.SetVipDetail(res.data));
         });
       },[]);

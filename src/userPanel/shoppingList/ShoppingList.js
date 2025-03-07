@@ -6,7 +6,6 @@ const ShoppingList=({show})=>{
     const [showDetail,setShowDetail] = useState(false);
     const [selectedCart,setSelectedCart] = useState([]);
     const shops = useSelector(state=>state.carts.shops);
-    console.log(shops);
     return(
         <div className="card card-flush mb-10">
             <div className="card-header align-items-center py-5 gap-2 gap-md-5">

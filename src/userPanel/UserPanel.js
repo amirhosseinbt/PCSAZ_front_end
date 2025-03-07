@@ -3,7 +3,7 @@ import {Navigate, useNavigate} from 'react-router-dom';
 import UserInformation from "./UserInformation";
 import Address from "./address/Address";
 import ModalAddAddress from "./address/ModalAddAddress";
-import DiscoutnCodeList from "./discountCode/DiscountCodeList";
+import DiscountCodeList from "./discountCode/DiscountCodeList";
 import ShoppingCartList from "./shoppingCart/ShoppingCartList";
 import ShoppingList from "./shoppingList/ShoppingList";
 import ShoppingDetail from "./shoppingList/ShoppingDetail";
@@ -35,13 +35,11 @@ const UserPanel = (props) => {
     });
     axios.get(`http://${ip}:8000/user/carts_detail/`)
     .then(res=> {
-      console.log(res.data);
       dispatch(cartsActions.SetCarts(res.data.carts_status));
       dispatch(cartsActions.SetShops(res.data.recent_shops));
     });
     axios.get(`http://${ip}:8000/user/discount_detail/`)
     .then(res=> {
-      console.log(res.data);
       dispatch(codeActions.SetCodes(res.data));
     });
   });
@@ -115,7 +113,7 @@ const UserPanel = (props) => {
                 {showOption==='address' || showOption===''?<Address showStatus={setShow}/>:null}
                 {show && (showOption==='address' || showOption==='')?<ModalAddAddress showStatus={setShow}/> :null}
                 {show && (showOption==='address' || showOption==='')?<div className="modal-backdrop fade show"></div>:null}
-                {showOption==='discountCode'?<DiscoutnCodeList/>:null}
+                {showOption==='discountCode'?<DiscountCodeList/>:null}
                 {showOption==='shoppingCart'?<ShoppingCartList/>:null}
                 {showOption==='orders'?<ShoppingList show={setShowShoppingDetail}/>:null}
                 {showShoppingDetail && showOption==='orders'?<div className="modal-backdrop fade show"></div>:null}

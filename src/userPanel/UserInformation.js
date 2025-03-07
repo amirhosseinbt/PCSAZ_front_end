@@ -13,7 +13,7 @@ const UserInformation = (props) =>
     const [copyButtonText,setCopyButtonText] = useState('کپی کردن کد معرفی');
     const handleCopyClick = () =>
     {
-        navigator.clipboard.writeText(document.getElementById('kt_referral_link_input').value);
+        navigator.clipboard.writeText(document.getElementById('kt_referral_link').textContent);
         setCopyButtonText('کپی شد !');
         setClicked('btn-active-light-primary');
         setTimeout(()=>{setCopyButtonText('کپی کردن کد معرفی');setClicked('')},2000);
@@ -75,8 +75,10 @@ const UserInformation = (props) =>
                                         </span>
                                     </div>
                                 </div>
-                                <div className="d-flex">
-                                    <input id="kt_referral_link_input" type="text" className="form-control form-control-solid me-3 flex-grow-1" dir='ltr' value={Info.referral_code} readOnly/>
+                                <div className="d-flex mt-3">
+                                    <div id="kt_referral_link" type="text" className="form-control form-control-solid me-3 flex-grow-1" dir='ltr' >
+                                        {Info.referral_code}
+                                    </div>
                                     <button id="kt_referral_program_link_copy_btn" className={`btn ${clicked} btn-light  fw-bold flex-shrink-0`} onClick={handleCopyClick}>{copyButtonText}</button>
                                 </div>
                             </div>

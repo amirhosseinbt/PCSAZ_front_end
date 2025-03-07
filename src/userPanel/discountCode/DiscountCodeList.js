@@ -4,7 +4,7 @@ import { useDispatch ,useSelector} from "react-redux";
 import { codeActions } from "../../store/userAuthenticaion";
 import DiscodeListItem from "./DiscodeListItem";
 
-const DiscoutnCodeList = () =>{
+const DiscountCodeList = () =>{
     const discountCodes = useSelector(state=>state.discountCode.discountCode);
     const jwt = useSelector(state=>state.jwt.jwt);
     axios.defaults.headers.common['Authorization'] = jwt;
@@ -14,7 +14,6 @@ const DiscoutnCodeList = () =>{
     useEffect(()=>{
     axios.get(`http://${ip}:8000/user/discount_detail/`)
     .then(res=> {
-      console.log(res.data);
       dispatch(codeActions.SetCodes(res.data));
     });
     },[]);
@@ -44,15 +43,10 @@ const DiscoutnCodeList = () =>{
                             <DiscodeListItem expirationDate={code.expiration_date} code={code.code} usageCount={code.usage_count} amount={code.amount} limit = {code.discount_limit} key={index}/>
                         ))
                     }
-                       {/* <DiscodeListItem expirationDate={'2025'} code={'2'} usageCount={'2'} amount={'$300'} limit = {'$100'}/>
-                       <DiscodeListItem expirationDate={'2022'} code={'3'} usageCount={'2'} amount={'$200'} limit = {'$100'}/>
-                       <DiscodeListItem expirationDate={'2021'} code={'4'} usageCount={'2'} amount={'$100'} limit = {'$100'}/>
-                       <DiscodeListItem expirationDate={'2025'} code={'5'} usageCount={'2'} amount={'$1200'} limit = {'$100'}/> */}
-                       
                     </tbody>
                 </table>
             </div>
         </div>
     );
 }
-export default DiscoutnCodeList;
+export default DiscountCodeList;

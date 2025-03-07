@@ -17,7 +17,7 @@ const Category = (props) =>
     return(
         <div className="form-check form-check-custom form-check-solid mb-5">
             <input className="form-check-input" type="checkbox" value={props.name} onChange={onCheckBoxClick}/>
-            <label className="form-check-label flex-grow-1 fw-semibold text-gray-700 fs-6" for="kt_search_category_1">{props.name}
+            <label className="form-check-label flex-grow-1 fw-semibold text-gray-700 fs-6">{props.name}
             </label>
         </div>
     );
