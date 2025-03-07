@@ -8,18 +8,20 @@ import UserPanel from './userPanel/UserPanel';
 import { useDispatch, useSelector } from 'react-redux';
 import { ipActions } from './store/userAuthenticaion';
 import Compatibility from './compatibility/Compatibility';
+import MainPage from './mainPage/MainPage';
 function App() {
   const dispath = useDispatch();
-  dispath(ipActions.SetIp('192.168.80.148'));
+  const {hostname} = window.location
+  dispath(ipActions.SetIp(`${hostname}`));
   return (
         <Router>
             <Routes>
-                <Route  path='/' element={<UserPanel />} />
+                <Route  path='/' element={<MainPage />} />
+                <Route  path='/user-panel' element={<UserPanel />} />
                 <Route  path='/sign-up' element={<SignUp/>} />
                 <Route  path='/sign-in' element={<SignIn />} />
                 <Route  path='/compatibility' element={<Compatibility />} />
                 <Route  path='/*' element={<Error404/>} />
-                {/* <Route path='/sign-up' element={<SignUp />} /> */}
             </Routes>
         </Router>
 

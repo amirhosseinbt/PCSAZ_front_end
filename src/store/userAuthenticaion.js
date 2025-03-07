@@ -6,6 +6,9 @@ import shoppingCartSlice from "./shoppingCart";
 import discountCodeSlice from "./discountCode";
 import vipDetailSlice from "./vipDetail";
 import ipSlice from "./ip";
+import compatibilityListSlice from "./compatibilityList";
+import compatibleListSlice from "./compatibleList";
+import categoryFilterSlice from "./categoryFilter";
 const jwtSlice = createSlice({
     name:'jwt',
     initialState:{jwt:''},
@@ -24,7 +27,7 @@ const persistConfig = {
 }
 const persistedReducer = persistReducer(persistConfig,jwtSlice.reducer);
 const store = configureStore({
-    reducer:{jwt:persistedReducer,userInfo:userInfoSlice.reducer,carts:shoppingCartSlice.reducer,discountCode:discountCodeSlice.reducer,vipDetail:vipDetailSlice.reducer , ip:ipSlice.reducer},
+    reducer:{jwt:persistedReducer,userInfo:userInfoSlice.reducer,carts:shoppingCartSlice.reducer,discountCode:discountCodeSlice.reducer,vipDetail:vipDetailSlice.reducer , ip:ipSlice.reducer,cpList:compatibilityListSlice.reducer,compatibleList:compatibleListSlice.reducer,ctFilter:categoryFilterSlice.reducer},
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
           serializableCheck: {
@@ -39,4 +42,7 @@ export const cartsActions = shoppingCartSlice.actions;
 export const codeActions = discountCodeSlice.actions;
 export const vipDetailActions = vipDetailSlice.actions;
 export const ipActions = ipSlice.actions;
+export const cpActions = compatibilityListSlice.actions;
+export const compatibleListActions = compatibleListSlice.actions;
+export const categoryFilterActions = categoryFilterSlice.actions;
 export  {store , persistor};

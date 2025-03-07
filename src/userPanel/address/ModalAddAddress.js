@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import ErrorMessage from "../../general/ErrorMessage";
 const ModalAddAddress = ({showStatus}) =>{
 	const jwt = useSelector(state=>state.jwt.jwt);
 	axios.defaults.headers.common['Authorization'] = jwt;
 	const [province,setProvince] = useState('');
 	const [remainder,setRemainder] = useState('');
+	const [showErrorProvince , setShowErrorProvince] =useState(false);
+	const [errorTextProvince , setErrorTextProvince] =useState('');
+	const [showErrorRemainder , setShowErrorRemainder] =useState(false);
+	const [errorTextRemainder , setErrorTextRemainder] =useState('');
 	const ip = useSelector(state=>state.ip.ip);
 	const onProvinceSelect = (event) =>{
 		setProvince(event.target.value);
@@ -16,18 +21,33 @@ const ModalAddAddress = ({showStatus}) =>{
 	const onSubmitClick = (event) =>
 	{
 		event.preventDefault();
-		axios.post(`http://${ip}:8000/user/add_addresses/`, {
-			adresses:[
-				{
-					province:province,
-					remainder:remainder
-				}
-			]
-		})
-		.then((res) => {
-			showStatus(false);
-		})
-		.catch((err) => {console.log(err)});
+		if(province === 'default' || province === '')
+		{
+			setShowErrorProvince(true);
+			setShowErrorRemainder(false);
+			setErrorTextProvince('لطفا یک استان را انتخاب کنید.');
+		}
+		else if(remainder.length === 0)
+		{
+			setShowErrorRemainder(true);
+			setShowErrorProvince(false);
+			setErrorTextRemainder('لطفا آدرس را وارد کنید.');
+		}
+		else
+		{
+			axios.post(`http://${ip}:8000/user/add_addresses/`, {
+				adresses:[
+					{
+						province:province,
+						remainder:remainder
+					}
+				]
+			})
+			.then((res) => {
+				showStatus(false);
+			})
+			.catch((err) => {console.log(err)});
+		}
 	}
     return(
         <div className="modal fade show" id="kt_modal_new_address" tabIndex="-1" style={{display: 'block', paddingRight: '0px'}} aria-modal="true" role="dialog">
@@ -48,29 +68,11 @@ const ModalAddAddress = ({showStatus}) =>{
 									<span className="path1"></span>
 									<span className="path2"></span>
 								</i>
-							</button>
-							 
+							</button>		 
 						</div>
-						 
-						 
 						<div className="modal-body py-10 px-lg-17">
 							 
 							<div className="scroll-y me-n7 pe-7" id="kt_modal_new_address_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_new_address_header" data-kt-scroll-wrappers="#kt_modal_new_address_scroll" data-kt-scroll-offset="300px" style={{maxHeight: '418px'}}>
-								{/* <div className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
-									<i className="ki-duotone ki-information fs-2tx text-warning me-4">
-										<span className="path1"></span>
-										<span className="path2"></span>
-										<span className="path3"></span>
-									</i>
-									<div className="d-flex flex-stack flex-grow-1">
-										<div className="fw-semibold">
-											<h4 className="text-gray-900 fw-bold">هشدار</h4>
-											<div className="fs-6 text-gray-700">به روزرسانی آدرس ممکن است مورد پتعدادد شما واقع شود
-											<a href="#">مالیات</a></div>
-										</div>
-									</div>
-								</div>*/}
-								
 								<div className="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
 									<label className="d-flex align-items-center fs-5 fw-semibold mb-2">
 										<span className="required">استان</span>
@@ -82,14 +84,14 @@ const ModalAddAddress = ({showStatus}) =>{
 										<option value="شیراز">شیراز</option>
 										<option value="اصفهان">اصفهان</option>
 										<option value="تبریز">تبریز</option>
-										
 									</select>
-									
 								</div>
+								{showErrorProvince?<ErrorMessage text={errorTextProvince}/>:null}
 								<div className="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
 									<label className="required fs-5 fw-semibold mb-2">آدرس</label>
 									<input className="form-control form-control-solid" placeholder="" name="reminder" onChange={onAddressChange}/>
 								</div>
+								{showErrorRemainder?<ErrorMessage text={errorTextRemainder}/>:null}
 							</div>
 						</div>
 						<div className="modal-footer flex-center">

@@ -1,190 +1,90 @@
 import { React, useEffect, useState } from "react";
 import "./Compatibility.css";
-import Product from "./Product";
-import { useSelector } from "react-redux";
+import Product from "../mainPage/Product";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import Category from "./Category";
+import CompatibleProduct from "./CompatibleProduct";
 const Compatibility = (props) => {
   const [products, setProducts] = useState([]);
-  const jwt = useSelector((state) => state.jwt.jwt);
-  const ip = useSelector((state) => state.ip.ip);
-  axios.defaults.headers.common["Authorization"] = jwt;
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  
+  // const jwt = useSelector((state) => state.jwt.jwt);
+  // const ip = useSelector((state) => state.ip.ip);
+  // const dispatch = useDispatch();
+  // axios.defaults.headers.common["Authorization"] = jwt;
+  const productList= useSelector(state=> state.compatibleList.items);
   useEffect(() => {
     document.body.classList.add("compatibility-page");
-    axios.get(`http://${ip}:8000/sazgaryab/products/`).then((res) => {
-      console.log(res.data);
-      setProducts(res.data.products);
-    });
+    setProducts(productList);
+    setFilteredProducts(productList);
+
     return () => {
       document.body.classList.remove("compatibility-page");
     };
   }, []);
-  //    const dispath = useDispatch();
-  //    const jwt = useSelector(state=>state.jwt.jwt);
-  //    useEffect(() => {
-  //       document.body.classList.add("sign-up-in-page");
-  //       return () => {
-  //         document.body.classList.remove("sign-up-in-page");
-  //       };
-  //     }, []);
-  //    const [phoneNumber , setPhoneNumber] = useState('');
-  //    const [password , setPassword] =useState('');
-  //    const navigate = useNavigate();
-  //    const onPhoneNumberChange = (event) => {
-  //       setPhoneNumber(event.target.value);
-  //   }
-  //   const onPasswordChange = (event) => {
-  //       setPassword(event.target.value);
-  //   }
-  //   const ip = useSelector(state=>state.ip.ip);
-  //    const onSubmitSignin = (event) =>{
-  //       event.preventDefault();
-  //       axios.post(`http://${ip}:8000/user/login/`, {
-  //          phone : phoneNumber,
-  //          password : password,
-  //       })
-  //       .then((res) => {
-  //          dispath(jwtActions.Login(res.data.jwt));
-  //          navigate('/');
-  //       })
-  //       .catch((err) => {console.log(err)});
-  //   }
-  return (
-    <div
-      id="kt_app_content"
-      className="app-content flex-column-fluid"
-      dir="rtl"
-    >
-      <div
-        id="kt_app_content_container"
-        className="app-container container-xxl"
-      >
-        <div className="card card-flush">
-          <div className="card-header align-items-center py-5 gap-2 gap-md-5">
-            <div className="card-title">
-              <div className="d-flex align-items-center position-relative my-1">
-                <i className="ki-duotone ki-magnifier fs-3 position-absolute ms-4">
-                  <span className="path1"></span>
-                  <span className="path2"></span>
-                </i>
-                <input
-                  type="text"
-                  data-kt-ecommerce-product-filter="search"
-                  className="form-control form-control-solid w-250px ps-12"
-                  placeholder="جستجو محصولات"
-                />
-              </div>
+  const categoryFilter = useSelector(state=> state.ctFilter.categories);
+  const onFilterClick = () =>
+  {
+    const filtered = products.filter((product) => {
+        return categoryFilter.includes(product.category);
+    });
+    setFilteredProducts(filtered);
+  }
+  return(
+      <div id="kt_app_content" className="app-content flex-column-fluid" dir="rtl">
+        <div id="kt_app_content_container" className="app-container container-xxl">
+          <div className="d-flex flex-column flex-lg-row" data-select2-id="select2-data-131-2d35">
+            <div className="flex-column flex-lg-row-auto w-100 w-lg-250px w-xxl-325px mb-8 mb-lg-0 me-lg-9 me-5">
+                <div className="card" data-select2-id="select2-data-139-jvt4">
+                  <div className="card-body" data-select2-id="select2-data-138-i6w2">
+                    <div className="mb-10 mt-5">
+                      <label className="fs-4 form-label fw-bold text-dark mb-5">دسته بندی ها</label>
+                      <Category name={'CPU'}/>
+                      <Category name={'Motherboard'}/>
+                      <Category name={'RAM Stick'}/>
+                      <Category name={'Cooler'}/>
+                      <Category name={'Power Supply'}/>
+                      <Category name={'Case'}/>
+                      <Category name={'SSD'}/>
+                      <Category name={'HDD'}/>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-end">
+                      <button className="btn btn-primary" onClick={onFilterClick}>فیلتر</button>
+                    </div>
+                  </div>
+                </div>
             </div>
-            <div className="card-toolbar flex-row-fluid justify-content-end gap-5">
-              <a
-                href="../../demo1/dist/apps/ecommerce/catalog/add-product.html"
-                className="btn btn-primary"
-              >
-                بررسی سازگاری
-              </a>
-            </div>
-          </div>
-          <div className="card-body pt-0">
-            <div
-              id="kt_ecommerce_products_table_wrapper"
-              className="dataTables_wrapper dt-bootstrap4 no-footer"
-            >
-              <div className="table-responsive">
-                <table
-                  className="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer"
-                  id="kt_ecommerce_products_table"
-                >
-                  <thead>
-                    <tr className="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                      <th
-                        className="w-10px pe-2 sorting_disabled"
-                        rowspan="1"
-                        colspan="1"
-                        style={{ width: "29.8906px" }}
-                      >
-                        <div className="form-check form-check-sm form-check-custom form-check-solid me-3">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            data-kt-check="true"
-                            data-kt-check-target="#kt_ecommerce_products_table .form-check-input"
-                            value="1"
-                          />
-                        </div>
-                      </th>
-                      <th
-                        className="min-w-200px sorting"
-                        tabindex="0"
-                        aria-controls="kt_ecommerce_products_table"
-                        rowspan="1"
-                        colspan="1"
-                        style={{ width: "219.688px" }}
-                      >
-                        محصولات
-                      </th>
-                      <th
-                        className="text-start min-w-100px sorting"
-                        tabindex="0"
-                        aria-controls="kt_ecommerce_products_table"
-                        rowspan="1"
-                        colspan="1"
-                        style={{ width: "110.297px" }}
-                      >
-                        شناسه کالا
-                      </th>
-                      <th
-                        className="text-start min-w-100px sorting"
-                        tabindex="0"
-                        aria-controls="kt_ecommerce_products_table"
-                        rowspan="1"
-                        colspan="1"
-                        style={{ width: "110.297px" }}
-                      >
-                        مدل
-                      </th>
-                      <th
-                        className="text-start min-w-100px sorting"
-                        tabindex="0"
-                        aria-controls="kt_ecommerce_products_table"
-                        rowspan="1"
-                        colspan="1"
-                        style={{ width: "110.297px" }}
-                      >
-                        برند
-                      </th>
-                      <th
-                        className="text-start min-w-70px sorting"
-                        tabindex="0"
-                        aria-controls="kt_ecommerce_products_table"
-                        rowspan="1"
-                        colspan="1"
-                        style={{ width: "96.4844px" }}
-                      >
-                        تعداد
-                      </th>
-                      <th
-                        className="text-start min-w-100px sorting"
-                        tabindex="0"
-                        aria-controls="kt_ecommerce_products_table"
-                        rowspan="1"
-                        colspan="1"
-                        style={{ width: "110.297px" }}
-                      >
-                        قیمت
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="fw-semibold text-gray-600">
-                    {
-                      products.map((product,index)=>(
-                        <Product imageSrc={product.image} id={product.id} stockCount={product.stock_count} price={product.current_price} model={product.model} brand={product.brand} category={product.category} key={index}/>
-                      ))
-                    }
-                  </tbody>
-                </table>
+            <div className="flex-lg-row-fluid" data-select2-id="select2-data-130-c0t6">
+              <div className="d-flex flex-wrap flex-stack pb-7" data-select2-id="select2-data-129-rk7g">
+                <div className="d-flex flex-wrap align-items-center my-1">
+                  <h3 className="fw-bold me-5 my-1">
+                  {filteredProducts.length} مورد پیدا شد
+                  </h3>
+                </div>
+                <div className="d-flex flex-wrap my-1" data-select2-id="select2-data-128-5eex">
+                  <ul className="nav nav-pills me-6 mb-2 mb-sm-0" role="tablist">
+                    <li className="nav-item m-0" role="presentation">
+                      <a className="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary btn_home" data-bs-toggle="tab" href="/" aria-selected="false" tabIndex="-1" role="tab">
+                        <i className="la la-store-alt fs-2x fs-2 btn_home">
+                          <span className="path1"></span>
+                          <span className="path2"></span>
+                        </i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
-              <div className="row">
-                <div className="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
-              </div>
+              <div className="tab-content">
+                <div id="kt_project_users_card_pane" className="tab-pane fade show active" role="tabpanel">
+                  <div className="row g-6 g-xl-9">
+                      {
+                        filteredProducts.map((product,index) => (
+                          <CompatibleProduct imageSrc={product.image} id={product.id} stockCount={product.stock_count} price={product.current_price} model={product.model} brand={product.brand} category={product.category} key={index}/>
+                        ))
+                      }
+                  </div>
+                </div>
             </div>
           </div>
         </div>
@@ -193,3 +93,5 @@ const Compatibility = (props) => {
   );
 };
 export default Compatibility;
+
+  
