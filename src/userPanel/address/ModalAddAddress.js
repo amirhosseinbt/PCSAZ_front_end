@@ -46,7 +46,10 @@ const ModalAddAddress = ({showStatus}) =>{
 			.then((res) => {
 				showStatus(false);
 			})
-			.catch((err) => {console.log(err)});
+			.catch((err) => {
+				setShowErrorRemainder(true);
+				setErrorTextRemainder(err.response.data.error);
+			});
 		}
 	}
     return(

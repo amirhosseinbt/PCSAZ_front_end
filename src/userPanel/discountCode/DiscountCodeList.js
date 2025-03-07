@@ -15,7 +15,7 @@ const DiscountCodeList = () =>{
     axios.get(`http://${ip}:8000/user/discount_detail/`)
     .then(res=> {
       dispatch(codeActions.SetCodes(res.data));
-    });
+    }).catch(err=>{});
     },[]);
     return(
         <div className="card card-flush mb-10">

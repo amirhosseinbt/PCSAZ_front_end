@@ -1,18 +1,11 @@
 import { React, useEffect, useState } from "react";
 import "./Compatibility.css";
-import Product from "../mainPage/Product";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+import { useSelector } from "react-redux";
 import Category from "./Category";
 import CompatibleProduct from "./CompatibleProduct";
 const Compatibility = (props) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  
-  // const jwt = useSelector((state) => state.jwt.jwt);
-  // const ip = useSelector((state) => state.ip.ip);
-  // const dispatch = useDispatch();
-  // axios.defaults.headers.common["Authorization"] = jwt;
   const productList= useSelector(state=> state.compatibleList.items);
   useEffect(() => {
     document.body.classList.add("compatibility-page");
@@ -22,14 +15,21 @@ const Compatibility = (props) => {
     return () => {
       document.body.classList.remove("compatibility-page");
     };
-  }, []);
+  },[productList]);
   const categoryFilter = useSelector(state=> state.ctFilter.categories);
   const onFilterClick = () =>
   {
     const filtered = products.filter((product) => {
         return categoryFilter.includes(product.category);
     });
-    setFilteredProducts(filtered);
+    if(categoryFilter.length === 0)
+    {
+      setFilteredProducts(products);
+    }
+    else
+    {
+      setFilteredProducts(filtered);
+    }
   }
   return(
       <div id="kt_app_content" className="app-content flex-column-fluid" dir="rtl">
@@ -65,7 +65,7 @@ const Compatibility = (props) => {
                 <div className="d-flex flex-wrap my-1" data-select2-id="select2-data-128-5eex">
                   <ul className="nav nav-pills me-6 mb-2 mb-sm-0" role="tablist">
                     <li className="nav-item m-0" role="presentation">
-                      <a className="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary btn_home" data-bs-toggle="tab" href="/" aria-selected="false" tabIndex="-1" role="tab">
+                      <a className="btn btn-sm btn-icon btn-light btn-color-muted" data-bs-toggle="tab" href="/" aria-selected="false" tabIndex="-1" role="tab">
                         <i className="la la-store-alt fs-2x fs-2 btn_home">
                           <span className="path1"></span>
                           <span className="path2"></span>

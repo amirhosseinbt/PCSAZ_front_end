@@ -8,7 +8,6 @@ import { jwtActions } from "../store/userAuthenticaion";
 import ErrorMessage from "../general/ErrorMessage";
 const SignUp = ()=> {
    const dispath = useDispatch();
-   const jwt = useSelector(state=>state.jwt.jwt);
    const ip = useSelector(state=>state.ip.ip);
    
    useEffect(() => {

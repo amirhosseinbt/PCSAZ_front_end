@@ -1,5 +1,13 @@
 import React from "react"
-import Cpu from '../assets/media/product/CPU.jpeg'
+import CPU from '../assets/media/product/CPU.jpg';
+import Motherboard from '../assets/media/product/Motherboard.jpeg'
+import RamStick from '../assets/media/product/RamStick.jpg';
+import Cooler from '../assets/media/product/Cooler.jpeg';
+import GPU from '../assets/media/product/GPU.jpeg';
+import PowerSupply from '../assets/media/product/PowerSupply.jpeg';
+import Case from '../assets/media/product/Case.jpeg';
+import SSD from '../assets/media/product/SSD.jpeg';
+import HDD from '../assets/media/product/HDD.jpeg';
 const CompatibleProduct = (props) =>
 {
 	return(
@@ -7,7 +15,7 @@ const CompatibleProduct = (props) =>
 		<div className="card">
 			<div className="card-body d-flex flex-center flex-column pt-12 p-9">
 				<div className="symbol symbol-65px symbol-circle mb-5">
-					<img src={Cpu} alt="image"/>
+					<img src={props.category === 'CPU'?CPU:props.category === 'Motherboard'?Motherboard:props.category === 'RAM Stick'?RamStick:props.category === 'Cooler'?Cooler:props.category === 'GPU'?GPU: props.category==='Power Supply'?PowerSupply: props.category==='Case'?Case: props.category==='SSD'?SSD:props.category==='HDD'?HDD:null} alt=""/>
 				</div>
 				<p href="#" className="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">{props.category}</p>
 				<div className="fw-semibold text-gray-400 mb-6">تعداد در انبار : {props.stockCount}</div>	

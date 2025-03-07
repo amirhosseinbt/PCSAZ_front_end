@@ -6,7 +6,6 @@ const UserInformation = (props) =>
 {
     const giftCode = useSelector(state=>state.discountCode.discountCode);
     const Info = useSelector(state=>state.userInfo.userInfo);
-    const isAuth = useSelector(state=>state.userInfo.isAuthenticated);
     const fullName = Info.first_name + ' ' + Info.last_name;
     const [activeButton,setActiveButton] = useState('');
     const [clicked,setClicked] = useState('');
@@ -19,12 +18,12 @@ const UserInformation = (props) =>
         setTimeout(()=>{setCopyButtonText('کپی کردن کد معرفی');setClicked('')},2000);
     }
     return(
-        <div className="card mb-5 mb-xl-10">
+        <div id="user_info" className="card mb-5 mb-xl-10">
             <div className="card-body pt-9 pb-0">
                 <div className="d-flex flex-wrap flex-sm-nowrap">
                     <div className="me-7 mb-4">
                         <div className="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                            <img src={img1} alt="image"/>
+                            <img src={img1} alt=""/>
                             <div className="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
                         </div>
                     </div>

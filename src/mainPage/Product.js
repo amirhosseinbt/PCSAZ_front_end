@@ -1,6 +1,14 @@
 import React from "react";
-import img1 from '../assets/media/product/CPU.jpeg';
-import { useDispatch, useSelector } from "react-redux";
+import CPU from '../assets/media/product/CPU.jpg';
+import Motherboard from '../assets/media/product/Motherboard.jpeg'
+import RamStick from '../assets/media/product/RamStick.jpg';
+import Cooler from '../assets/media/product/Cooler.jpeg';
+import GPU from '../assets/media/product/GPU.jpeg';
+import PowerSupply from '../assets/media/product/PowerSupply.jpeg';
+import Case from '../assets/media/product/Case.jpeg';
+import SSD from '../assets/media/product/SSD.jpeg';
+import HDD from '../assets/media/product/HDD.jpeg';
+import { useDispatch } from "react-redux";
 import { cpActions } from "../store/userAuthenticaion";
 const Product = (props) =>{
     const dispatch = useDispatch();
@@ -28,10 +36,10 @@ const Product = (props) =>{
         <td>
             <div  className="d-flex align-items-center">
                 
-            <p className="symbol symbol-50px">
-                <span  className="symbol-label" style={{backgroundImage:`url(${img1})`}}></span>
-            </p>
-                
+            <div className="symbol symbol-65px symbol-circle mb-5">
+                <img  className="symbol-label" src={
+                props.category === 'CPU'?CPU:props.category === 'Motherboard'?Motherboard:props.category === 'RAM Stick'?RamStick:props.category === 'Cooler'?Cooler:props.category === 'GPU'?GPU: props.category==='Power Supply'?PowerSupply: props.category==='Case'?Case: props.category==='SSD'?SSD:props.category==='HDD'?HDD:null} alt=""/>
+            </div>
             <div  className="ms-5 mt-5" style={{cursor:'pointer'}}>
                 <p className="text-gray-800 text-hover-primary fs-5 fw-bold">{props.category}</p>
             </div>

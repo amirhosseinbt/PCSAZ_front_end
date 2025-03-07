@@ -1,6 +1,5 @@
 import {React} from 'react';
 import img1 from "../../assets/media/stock/ecommerce/1.png";
-import img2 from '../../assets/media/stock/ecommerce/100.png';
 import ShoppingDetailItem from './ShoppingDetatilItem';
 const ShoppingDetail = (props) => {
     return(
@@ -36,7 +35,7 @@ const ShoppingDetail = (props) => {
                                         {
                                             props.Info.products&&
                                             props.Info.products.map((product,index)=>(
-                                                <ShoppingDetailItem name={product.category} id={product.product_id} quantity={product.quantity} price={product.cart_price} imgSrc={img1} key={index}/>
+                                                <ShoppingDetailItem category={product.category} id={product.product_id} quantity={product.quantity} price={product.cart_price} imgSrc={img1} key={index}/>
 
                                             ))
                                         }
@@ -44,14 +43,7 @@ const ShoppingDetail = (props) => {
                                             <td colSpan="4" className="text-end">جمع کل</td>
                                             <td className="text-end">{props.Info.total_price}</td>
                                         </tr>
-                                        {/* <tr>
-                                            <td colSpan="4" className="text-end">VAT (0%)</td>
-                                            <td className="text-end">$0.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td colSpan="4" className="fs-3 text-dark text-end">Grand کل</td>
-                                            <td className="text-dark fs-3 fw-bolder text-end">$269.00</td>
-                                        </tr> */}
+                                       
                                     </tbody>
                                 </table>
                             </div>

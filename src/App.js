@@ -1,11 +1,10 @@
 import './App.css';
-import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SignUp from './signUp/SignUp';
 import SignIn from './signIn/SignIn';
 import Error404 from './general/Error404';
 import UserPanel from './userPanel/UserPanel';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ipActions } from './store/userAuthenticaion';
 import Compatibility from './compatibility/Compatibility';
 import MainPage from './mainPage/MainPage';

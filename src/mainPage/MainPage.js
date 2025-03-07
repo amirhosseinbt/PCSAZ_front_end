@@ -23,17 +23,17 @@ const MainPage = (props) => {
     axios.get(`http://${ip}:8000/sazgaryab/products/`).then((res) => {
       setProducts(res.data.products);
       setFilteredProducts(res.data.products);
-    });
+    }).catch(err=>{});
     if (jwt !== '') {
         axios.get(`http://${ip}:8000/user/personal_data/`)
         .then(res=> {
           dispatch(userINfoActions.SetUserInfo(res.data));
-        });
+        }).catch(err=>{});
     }
     return () => {
       document.body.classList.remove("MainPage-page");
     };
-  }, []);
+  },[]);
   const selectedProductList = useSelector((state) => state.cpList.items);
   const onCPButtonClick = (event) => {
     event.preventDefault();
@@ -91,22 +91,11 @@ const MainPage = (props) => {
             className="app-container container-fluid d-flex align-items-stretch justify-content-between"
             id="kt_app_header_container"
           >
-            <div
-              className="d-flex align-items-stretch justify-content-between flex-lg-grow-1"
-              id="kt_app_header_wrapper"
-            >
-              <div
-                data-kt-swapper="true"
-                data-kt-swapper-mode="{default: 'prepend', lg: 'prepend'}"
-                data-kt-swapper-parent="{default: '#kt_app_content_container', lg: '#kt_app_header_wrapper'}"
-                className="page-title d-flex flex-column justify-content-center flex-wrap me-3 mb-5 mb-lg-0"
-              >
                 <div className="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                   <h1 className="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
                     پی سی ساز
                   </h1>
                 </div>
-              </div>
               <div
                 className="d-flex align-items-stretch justify-content-end flex-lg-grow-1"
                 id="kt_app_header_wrapper"
@@ -154,7 +143,6 @@ const MainPage = (props) => {
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
         <div

@@ -1,12 +1,10 @@
 import {React , useState , useEffect} from "react";
-import {Navigate, useNavigate} from 'react-router-dom';
 import UserInformation from "./UserInformation";
 import Address from "./address/Address";
 import ModalAddAddress from "./address/ModalAddAddress";
 import DiscountCodeList from "./discountCode/DiscountCodeList";
 import ShoppingCartList from "./shoppingCart/ShoppingCartList";
 import ShoppingList from "./shoppingList/ShoppingList";
-import ShoppingDetail from "./shoppingList/ShoppingDetail";
 import SubscriptionDetail from "./subscription/SubscriptionDetail";
 import "./UserPanel.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +13,7 @@ import { userINfoActions } from "../store/userAuthenticaion";
 import { cartsActions } from "../store/userAuthenticaion";
 import { codeActions } from "../store/userAuthenticaion";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const UserPanel = (props) => {
   const jwt = useSelector(state=>state.jwt.jwt);
   const ip = useSelector(state=>state.ip.ip);
@@ -22,51 +21,43 @@ const UserPanel = (props) => {
   const [show,setShow] = useState(false);
   const [showShoppingDetail,setShowShoppingDetail] = useState(false);
   const [showOption,setShowOption] = useState('');
-  const navigate = useNavigate();
   axios.defaults.headers.common['Authorization'] = jwt;
+  const navigate = useNavigate();
   const onLogoutClick = () =>
   {
     dispatch(jwtActions.Logout());
   }
   useEffect(()=>{
-    axios.get(`http://${ip}:8000/user/personal_data/`)
-    .then(res=> {
-      dispatch(userINfoActions.SetUserInfo(res.data));
-    });
-    axios.get(`http://${ip}:8000/user/carts_detail/`)
-    .then(res=> {
-      dispatch(cartsActions.SetCarts(res.data.carts_status));
-      dispatch(cartsActions.SetShops(res.data.recent_shops));
-    });
-    axios.get(`http://${ip}:8000/user/discount_detail/`)
-    .then(res=> {
-      dispatch(codeActions.SetCodes(res.data));
-    });
-  });
+    if (jwt === '') {
+      navigate('/');
+    }
+    else
+    {
+      axios.get(`http://${ip}:8000/user/personal_data/`)
+      .then(res=> {
+        dispatch(userINfoActions.SetUserInfo(res.data));
+      }).catch(err=>{});
+      axios.get(`http://${ip}:8000/user/carts_detail/`)
+      .then(res=> {
+        dispatch(cartsActions.SetCarts(res.data.carts_status));
+        dispatch(cartsActions.SetShops(res.data.recent_shops));
+      }).catch(err=>{});
+      axios.get(`http://${ip}:8000/user/discount_detail/`)
+      .then(res=> {
+        dispatch(codeActions.SetCodes(res.data));
+      }).catch(err=>{});
+    }
+  },[]);
   return (
     <div id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true" data-kt-app-toolbar-enabled="true" data-kt-app-toolbar-fixed="true" className="d-flex flex-column flex-root app-root" dir="rtl" >
       <div className="app-page flex-column flex-column-fluid" id="kt_app_page">
         <div id="kt_app_header" className="app-header" data-kt-sticky="true" data-kt-sticky-activate="{default: true, lg: true}" data-kt-sticky-name="app-header-minimize" data-kt-sticky-offset="{default: '200px', lg: '0'}" data-kt-sticky-animation="false" data-bs-theme="light" style={{borderBottom:'1px solid #e7e7e7'}}
         >
           <div className="app-container container-fluid d-flex align-items-stretch justify-content-between" id="kt_app_header_container">
-            <div className="d-flex align-items-center d-lg-none ms-n3 me-1 me-md-2" title="مشاهده">
-            </div>
-
-            <div
-              className="d-flex align-items-stretch justify-content-between flex-lg-grow-1"
-              id="kt_app_header_wrapper"
-            >
-            <div
-                    data-kt-swapper="true"
-                    data-kt-swapper-mode="{default: 'prepend', lg: 'prepend'}"
-                    data-kt-swapper-parent="{default: '#kt_app_content_container', lg: '#kt_app_header_wrapper'}"
-                    className="page-title d-flex flex-column justify-content-center flex-wrap me-3 mb-5 mb-lg-0"
-                  >
-                     <div className="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-                      <h1 className="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                        پنل کاربری
-                      </h1>
-                    </div>
+            <div className="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
+              <h1 className="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+                پنل کاربری
+              </h1>
             </div>
             <div className="d-flex align-items-stretch justify-content-end flex-lg-grow-1" id="kt_app_header_wrapper">
 
@@ -91,10 +82,7 @@ const UserPanel = (props) => {
 							</div>
 								
 							</div>
-            </div>
-               
-            </div>
-              
+            </div>   
           </div>
             
         </div>

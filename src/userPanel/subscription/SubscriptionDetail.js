@@ -12,7 +12,7 @@ const SubscriptionDetail = () =>{
         axios.get(`http://${ip}:8000/user/vip_detail/`)
         .then(res=> {
             dispatch(vipDetailActions.SetVipDetail(res.data));
-        });
+        }).catch(err=>{});
       },[]);
     return(
     <div className="card card-xl-stretch mb-5 mb-xl-8">
@@ -38,7 +38,7 @@ const SubscriptionDetail = () =>{
                     </div>
                     <div className="d-flex align-items-center flex-wrap w-100">
                         <div className="mb-1 pe-3 flex-grow-1">
-                            <a href="#" className="fs-5 text-gray-800 text-hover-primary fw-bold mb-2">زمان باقی مانده</a>
+                            <p className="fs-5 text-gray-800 text-hover-primary fw-bold mb-2" style={{cursor:'pointer'}}>زمان باقی مانده</p>
                             <div className="text-gray-400 fw-semibold fs-5 mb-2">
                                     {vipDetails.Time_remaining.days + ' روز '+vipDetails.Time_remaining.hours+' ساعت '+vipDetails.Time_remaining.minutes +' دقیقه '}
                             </div>
