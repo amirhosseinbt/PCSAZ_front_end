@@ -14,6 +14,7 @@ import { cartsActions } from "../store/userAuthenticaion";
 import { codeActions } from "../store/userAuthenticaion";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 const UserPanel = (props) => {
   const jwt = useSelector(state=>state.jwt.jwt);
   const ip = useSelector(state=>state.ip.ip);
@@ -23,6 +24,12 @@ const UserPanel = (props) => {
   const [showOption,setShowOption] = useState('');
   axios.defaults.headers.common['Authorization'] = jwt;
   const navigate = useNavigate();
+  const handle401Error = (error) => {
+    if (error.response && error.response.status === 401) {
+      dispatch(jwtActions.Logout());
+      navigate('/sign-in');
+    }
+  };
   const onLogoutClick = () =>
   {
     dispatch(jwtActions.Logout());
@@ -36,16 +43,16 @@ const UserPanel = (props) => {
       axios.get(`http://${ip}:8000/user/personal_data/`)
       .then(res=> {
         dispatch(userINfoActions.SetUserInfo(res.data));
-      }).catch(err=>{});
+      }).catch(handle401Error);
       axios.get(`http://${ip}:8000/user/carts_detail/`)
       .then(res=> {
         dispatch(cartsActions.SetCarts(res.data.carts_status));
         dispatch(cartsActions.SetShops(res.data.recent_shops));
-      }).catch(err=>{});
+      }).catch(handle401Error);
       axios.get(`http://${ip}:8000/user/discount_detail/`)
       .then(res=> {
         dispatch(codeActions.SetCodes(res.data));
-      }).catch(err=>{});
+      }).catch(handle401Error);
     }
   },[]);
   return (

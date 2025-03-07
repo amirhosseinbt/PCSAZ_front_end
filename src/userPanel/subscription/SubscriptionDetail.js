@@ -1,9 +1,12 @@
 import {React , useEffect} from "react";
 import axios from "axios";
 import { useDispatch,useSelector } from "react-redux";
-import { vipDetailActions } from "../../store/userAuthenticaion";
+import { jwtActions, vipDetailActions } from "../../store/userAuthenticaion";
+import { useNavigate } from "react-router-dom";
+
 const SubscriptionDetail = () =>{
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const ip = useSelector(state=>state.ip.ip);
     const jwt = useSelector(state=>state.jwt.jwt);
     const vipDetails = useSelector(state=>state.vipDetail.vipDetail);
@@ -12,7 +15,12 @@ const SubscriptionDetail = () =>{
         axios.get(`http://${ip}:8000/user/vip_detail/`)
         .then(res=> {
             dispatch(vipDetailActions.SetVipDetail(res.data));
-        }).catch(err=>{});
+        }).catch(err=>{
+            if(err.response && err.response.status === 401){
+                dispatch(jwtActions.Logout())
+                navigate("/sign-in")
+            }
+        });
       },[]);
     return(
     <div className="card card-xl-stretch mb-5 mb-xl-8">

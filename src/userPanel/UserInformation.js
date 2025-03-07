@@ -10,13 +10,53 @@ const UserInformation = (props) =>
     const [activeButton,setActiveButton] = useState('');
     const [clicked,setClicked] = useState('');
     const [copyButtonText,setCopyButtonText] = useState('کپی کردن کد معرفی');
-    const handleCopyClick = () =>
-    {
-        navigator.clipboard.writeText(document.getElementById('kt_referral_link').textContent);
-        setCopyButtonText('کپی شد !');
-        setClicked('btn-active-light-primary');
-        setTimeout(()=>{setCopyButtonText('کپی کردن کد معرفی');setClicked('')},2000);
-    }
+    const handleCopyClick = () => {
+        const textToCopy = document.getElementById("kt_referral_link").textContent;
+    
+        if (navigator.clipboard){
+          navigator.clipboard
+            .writeText(textToCopy)
+            .then(() => {
+              setCopyButtonText("کپی شد !");
+              setClicked("btn-active-light-primary");
+              setTimeout(() => {
+                setCopyButtonText("کپی کردن کد معرفی");
+                setClicked("");
+              }, 2000);
+            })
+            .catch((err) => {
+                console.error("Failed to copy text: ", err);
+                alert("Failed to copy text. Please try again.");
+            });
+        }
+        else {
+          const textarea = document.createElement("textarea");
+          textarea.value = textToCopy;
+          textarea.style.position = "fixed"; // Avoid scrolling to bottom
+          document.body.appendChild(textarea);
+          textarea.focus();
+          textarea.select();
+          try {
+            const successful = document.execCommand("copy");
+            if (successful) {
+              setCopyButtonText("کپی شد !");
+              setClicked("btn-active-light-primary");
+              setTimeout(() => {
+                setCopyButtonText("کپی کردن کد معرفی");
+                setClicked("");
+              }, 2000);
+            } else {
+              console.error("Failed to copy text");
+              alert("Failed to copy text. Please copy manually.");
+            }
+          } catch (err) {
+            console.error("Failed to copy text: ", err);
+            alert("Failed to copy text. Please copy manually.");
+          }
+          document.body.removeChild(textarea);
+        }
+    };
+    
     return(
         <div id="user_info" className="card mb-5 mb-xl-10">
             <div className="card-body pt-9 pb-0">
@@ -53,9 +93,9 @@ const UserInformation = (props) =>
                                     </div>
                                     <div className="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                         <div className="d-flex align-items-center">
-                                            <div className="fs-2 fw-bold counted mb-1" >زمان ثبت نام</div>
+                                            <div className="fs-2 fw-bold counted mb-1" dir="ltr">{Info.client_timestamp}</div>
                                         </div>
-                                        <div className="fw-semibold fs-6 text-gray-400" dir="ltr">{Info.client_timestamp}</div>
+                                        <div className="fw-semibold fs-6 text-gray-400">زمان ثبت نام</div>
                                     </div>
                                     <div className="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                         <div className="d-flex align-items-center">

@@ -1,13 +1,16 @@
 import {React,useEffect} from "react";
 import axios from "axios";
 import { useDispatch ,useSelector} from "react-redux";
-import { codeActions } from "../../store/userAuthenticaion";
+import { codeActions, jwtActions } from "../../store/userAuthenticaion";
 import DiscodeListItem from "./DiscodeListItem";
+import { useNavigate } from "react-router-dom";
+
 
 const DiscountCodeList = () =>{
     const discountCodes = useSelector(state=>state.discountCode.discountCode);
     const jwt = useSelector(state=>state.jwt.jwt);
     axios.defaults.headers.common['Authorization'] = jwt;
+    const navigate = useNavigate()
     const dispatch = useDispatch();
     const ip = useSelector(state=>state.ip.ip);
     
@@ -15,7 +18,12 @@ const DiscountCodeList = () =>{
     axios.get(`http://${ip}:8000/user/discount_detail/`)
     .then(res=> {
       dispatch(codeActions.SetCodes(res.data));
-    }).catch(err=>{});
+    }).catch(err=>{
+        if(err.response && err.response.status === 401){
+            dispatch(jwtActions.Logout())
+            navigate("/sign-in")
+        }
+    });
     },[]);
     return(
         <div className="card card-flush mb-10">

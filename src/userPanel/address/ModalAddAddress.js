@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import ErrorMessage from "../../general/ErrorMessage";
+import { jwtActions } from "../../store/userAuthenticaion";
+import { Navigate, useNavigate } from "react-router-dom";
 const ModalAddAddress = ({showStatus}) =>{
 	const jwt = useSelector(state=>state.jwt.jwt);
 	axios.defaults.headers.common['Authorization'] = jwt;
+	const navigate = useNavigate()
 	const [province,setProvince] = useState('');
 	const [remainder,setRemainder] = useState('');
 	const [showErrorProvince , setShowErrorProvince] =useState(false);
@@ -47,6 +50,10 @@ const ModalAddAddress = ({showStatus}) =>{
 				showStatus(false);
 			})
 			.catch((err) => {
+				if(err.response.status === 401){
+					dispatch(jwtActions.Logout());
+					navigate('/sign-in');
+				}
 				setShowErrorRemainder(true);
 				setErrorTextRemainder(err.response.data.error);
 			});

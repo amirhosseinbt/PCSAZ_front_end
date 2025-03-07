@@ -2,11 +2,12 @@ import { React, useEffect, useState } from "react";
 import "./MainPage.css";
 import Product from "./Product";
 import { useDispatch, useSelector } from "react-redux";
-import { compatibleListActions } from "../store/userAuthenticaion";
+import { compatibleListActions, jwtActions} from "../store/userAuthenticaion";
 import axios from "axios";
-import { userINfoActions } from "../store/userAuthenticaion";
+import { userINfoActions} from "../store/userAuthenticaion";
 import { useNavigate } from "react-router-dom";
 import ErrorMessage from "../general/ErrorMessage";
+
 const MainPage = (props) => {
   const [showError , setShowError] =useState(false);
   const [errorText , setErrorText] =useState('');
@@ -17,6 +18,12 @@ const MainPage = (props) => {
   const dispatch = useDispatch();
   axios.defaults.headers.common["Authorization"] = jwt;
   const navigate = useNavigate();
+  const handle401Error = (error) => {
+    if (error.response && error.response.status === 401) {
+      dispatch(jwtActions.Logout());
+      navigate('/sign-in');
+    }
+  };
   const Info = useSelector(state=>state.userInfo.userInfo);
   useEffect(() => {
     document.body.classList.add("MainPage-page");
@@ -28,7 +35,7 @@ const MainPage = (props) => {
         axios.get(`http://${ip}:8000/user/personal_data/`)
         .then(res=> {
           dispatch(userINfoActions.SetUserInfo(res.data));
-        }).catch(err=>{});
+        }).catch(handle401Error);
     }
     return () => {
       document.body.classList.remove("MainPage-page");
@@ -52,6 +59,7 @@ const MainPage = (props) => {
           navigate("/compatibility");
         })
         .catch((err) => {
+            handle401Error(err);
             setShowError(true);
             setErrorText(err.response.data.error);
         });
