@@ -13,16 +13,19 @@ function App() {
   const {hostname} = window.location
   dispath(ipActions.SetIp(`${hostname}`));
   return (
-        <Router>
-            <Routes>
-                <Route  path='/' element={<MainPage />} />
-                <Route  path='/user-panel' element={<UserPanel />} />
-                <Route  path='/sign-up' element={<SignUp/>} />
-                <Route  path='/sign-in' element={<SignIn />} />
-                <Route  path='/compatibility' element={<Compatibility />} />
-                <Route  path='/*' element={<Error404/>} />
-            </Routes>
-        </Router>
+    <div>
+
+    </div>
+        // <Router>
+        //     <Routes>
+        //         <Route  path='/' element={<MainPage />} />
+        //         <Route  path='/user-panel' element={<UserPanel />} />
+        //         <Route  path='/sign-up' element={<SignUp/>} />
+        //         <Route  path='/sign-in' element={<SignIn />} />
+        //         <Route  path='/compatibility' element={<Compatibility />} />
+        //         <Route  path='/*' element={<Error404/>} />
+        //     </Routes>
+        // </Router>
 
   );
 }
