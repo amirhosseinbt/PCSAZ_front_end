@@ -12,10 +12,10 @@ const ShoppingListItem=(props)=>{
                     <span className="fw-bold">{props.amount}</span>
                 </td>
                 <td className="text-start">
-                    <span className="fw-bold">{props.lockedDate}</span>
+                    <span className="fw-bold" dir="ltr">{props.lockedDate}</span>
                 </td>
                 <td className="text-start">
-                    <span className="fw-bold">{props.payDate}</span>
+                    <span className="fw-bold" dir="ltr">{props.payDate}</span>
                 </td>
                 <td className="text-start">
                     <button onClick={()=>{props.showStatus(true);props.setSelectedCart(props.selectedCart); props.showDetail(true);}} className="btn btn-icon btn-light btn-active-secondary btn-sm ms-auto me-lg-n7">
