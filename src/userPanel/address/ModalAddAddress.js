@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import ErrorMessage from "../../general/ErrorMessage";
 import { jwtActions } from "../../store/userAuthenticaion";
@@ -15,6 +15,7 @@ const ModalAddAddress = ({showStatus}) =>{
 	const [showErrorRemainder , setShowErrorRemainder] =useState(false);
 	const [errorTextRemainder , setErrorTextRemainder] =useState('');
 	const ip = useSelector(state=>state.ip.ip);
+	const dispatch = useDispatch();
 	const onProvinceSelect = (event) =>{
 		setProvince(event.target.value);
 	}

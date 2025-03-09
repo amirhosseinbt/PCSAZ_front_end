@@ -6,6 +6,7 @@ import DiscountCodeList from "./discountCode/DiscountCodeList";
 import ShoppingCartList from "./shoppingCart/ShoppingCartList";
 import ShoppingList from "./shoppingList/ShoppingList";
 import SubscriptionDetail from "./subscription/SubscriptionDetail";
+import ParticlesBg from 'particles-bg'
 import "./UserPanel.css";
 import { useDispatch, useSelector } from "react-redux";
 import { jwtActions } from "../store/userAuthenticaion";
@@ -74,8 +75,6 @@ const UserPanel = (props) => {
 										<div className="d-flex align-items-center" data-kt-search-element="toggle" id="kt_header_search_toggle">
 											<a className="btn btn-icon btn-custom btn-icon-muted btn-active-color-primary w-35px h-35px" href="/sign-in" onClick={onLogoutClick} style={{justifyContent:'right'}}>
 												<i className="ki-outline ki-exit-left  fs-1">
-													<span className="path1"></span>
-													<span className="path2"></span>
 												</i>
 											</a>
 											<a className="btn btn-icon btn-custom btn-icon-muted btn-active-color-primary w-35px h-35px" href="/">
@@ -104,6 +103,7 @@ const UserPanel = (props) => {
                   id="kt_app_content_container"
                   className="app-container container-xxl"
                 >
+                <ParticlesBg color="rgb(51, 51, 51)" num={70} type="cobweb" className="particles-bg-canvas-self"/>
                 <UserInformation showOption={setShowOption}/>
                 {showOption==='address' || showOption===''?<Address showStatus={setShow}/>:null}
                 {show && (showOption==='address' || showOption==='')?<ModalAddAddress showStatus={setShow}/> :null}
@@ -113,6 +113,7 @@ const UserPanel = (props) => {
                 {showOption==='orders'?<ShoppingList show={setShowShoppingDetail}/>:null}
                 {showShoppingDetail && showOption==='orders'?<div className="modal-backdrop fade show"></div>:null}
                 {showOption==='subscription'?<SubscriptionDetail/>:null}
+                {/* </ParticlesBg> */}
                 </div>
               </div>
             </div>

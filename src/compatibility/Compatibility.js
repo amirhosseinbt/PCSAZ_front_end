@@ -3,6 +3,7 @@ import "./Compatibility.css";
 import { useSelector } from "react-redux";
 import Category from "./Category";
 import CompatibleProduct from "./CompatibleProduct";
+import ParticlesBg from "particles-bg";
 const Compatibility = (props) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -34,6 +35,7 @@ const Compatibility = (props) => {
   return(
       <div id="kt_app_content" className="app-content flex-column-fluid" dir="rtl">
         <div id="kt_app_content_container" className="app-container container-xxl">
+        <ParticlesBg color="rgb(51, 51, 51)" num={70} type="cobweb" className="particles-bg-canvas-self"/>
           <div className="d-flex flex-column flex-lg-row" data-select2-id="select2-data-131-2d35">
             <div className="flex-column flex-lg-row-auto w-100 w-lg-250px w-xxl-325px mb-8 mb-lg-0 me-lg-9 me-5">
                 <div className="card" data-select2-id="select2-data-139-jvt4">

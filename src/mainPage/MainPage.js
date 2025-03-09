@@ -7,7 +7,7 @@ import axios from "axios";
 import { userINfoActions} from "../store/userAuthenticaion";
 import { useNavigate } from "react-router-dom";
 import ErrorMessage from "../general/ErrorMessage";
-
+import ParticlesBg from "particles-bg";
 const MainPage = (props) => {
   const [showError , setShowError] =useState(false);
   const [errorText , setErrorText] =useState('');
@@ -123,6 +123,7 @@ const MainPage = (props) => {
                       data-kt-menu-placement="bottom-end"
                       data-kt-search="true"
                     >
+
                       <div
                         className="d-flex align-items-center"
                         data-kt-search-element="toggle"
@@ -134,8 +135,6 @@ const MainPage = (props) => {
                           href="/user-panel"
                         >
                           <i className="ki-outline ki-profile-circle  fs-2x">
-                            <span className="path1"></span>
-                            <span className="path2"></span>
                           </i>
                         </a>
                       ):(
@@ -158,6 +157,7 @@ const MainPage = (props) => {
           className="app-content flex-column-fluid"
           dir="rtl"
         >
+          <ParticlesBg color="rgb(51, 51, 51)" num={70} type="cobweb" className="particles-bg-canvas-self"/>
           <div
             id="kt_app_content_container"
             className="app-container container-xxl mt-18"
@@ -167,8 +167,6 @@ const MainPage = (props) => {
                 <div className="card-title">
                   <div className="d-flex align-items-center position-relative my-1">
                     <i className="ki-duotone ki-magnifier fs-3 position-absolute ms-4">
-                      <span className="path1"></span>
-                      <span className="path2"></span>
                     </i>
                     <input
                       type="text"
